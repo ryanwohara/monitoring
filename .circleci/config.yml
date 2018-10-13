@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  ping_swiftirc:
+    machine: true
+    steps:
+      - run: mkdir -p logs
+      - run: for a in $(dig A +short irc.swiftirc.net) ; do ping -c5 $a > logs/$a.log ; done
+      - run: for a in $(dig AAAA +short irc.swiftirc.net) ; do ping6 -c5 $a > logs/$a.log ; done
+      - store_artifacts:
+          path: logs
+
+workflows:
+  version: 2
+  ping:
+    jobs:
+      - ping_swiftirc
+    triggers:
+      - schedule:
+          cron: "0,10,20,30,40,50 * * * *"
+          filters:
+            branches:
+              only:
+                - master
