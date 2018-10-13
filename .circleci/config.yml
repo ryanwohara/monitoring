@@ -4,11 +4,21 @@ jobs:
     machine: true
     steps:
       - run: mkdir -p logs/{curl,ping,netcat}
-      - run: curl -iL swiftirc.net > logs/curl/swiftirc.net.log
-      - run: curl -iL www.swiftirc.net > logs/curl/www.swiftirc.net.log
-      - run: curl -iL qwebirc.swiftirc.net > logs/curl/qwebirc.swiftirc.net.log
-      - run: for a in $(dig A +short irc.swiftirc.net) ; do ping -c5 $a > logs/ping/$a.log ; done
-      - run: for a in $(dig A +short irc.swiftirc.net) ; do nc -w1 $a 6667 > logs/netcat/$a.log ; done
+      - run: 
+          command: curl -iL swiftirc.net > logs/curl/swiftirc.net.log
+          when: always
+      - run: 
+          command: curl -iL www.swiftirc.net > logs/curl/www.swiftirc.net.log
+          when: always
+      - run: 
+          command: curl -iL qwebirc.swiftirc.net > logs/curl/qwebirc.swiftirc.net.log
+          when: always
+      - run: 
+          command: for a in $(dig A +short irc.swiftirc.net) ; do ping -c5 $a > logs/ping/$a.log ; done
+          when: always
+      - run: 
+          command: for a in $(dig A +short irc.swiftirc.net) ; do nc -w1 $a 6667 > logs/netcat/$a.log ; done
+          when: always
 # CircleCI does not have IPv6 connectivity .........
 # TODO: workaround?
 #      - run: for a in $(dig AAAA +short irc.swiftirc.net) ; do ping6 -c5 $a > logs/ping/$a.log ; done
