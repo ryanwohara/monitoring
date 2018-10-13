@@ -2,6 +2,7 @@ version: 2
 jobs:
   ping_swiftirc:
     machine: true
+    shell: bash
     steps:
       - run: mkdir -p logs/{curl,ping,netcat}
       - run: 
