@@ -18,7 +18,7 @@ jobs:
           command: for a in $(dig A +short irc.swiftirc.net) ; do ping -c5 $a > logs/ping/$a.log ; done
           when: always
       - run: 
-          command: for a in $(dig A +short irc.swiftirc.net) ; do nc -w1 $a 6667 > logs/netcat/$a.log ; done
+          command: for a in $(dig A +short irc.swiftirc.net) ; do nc -w1 $a 6667 > logs/netcat/$a.log 2>&1 ; done
           when: always
 # CircleCI does not have IPv6 connectivity .........
 # TODO: workaround?
