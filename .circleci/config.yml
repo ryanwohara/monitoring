@@ -24,7 +24,7 @@ jobs:
 # TODO: workaround?
 #      - run: for a in $(dig AAAA +short irc.swiftirc.net) ; do ping6 -c5 $a > logs/ping/$a.log ; done
       - run:
-          command: find logs/ -exec cat {} \;
+          command: find logs/ -name *.log -type f -exec cat {} \;
           when: always
       - store_artifacts:
           path: logs
