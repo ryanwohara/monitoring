@@ -15,10 +15,10 @@ jobs:
           command: curl -iL qwebirc.swiftirc.net > logs/curl/qwebirc.swiftirc.net.log
           when: always
       - run: 
-          command: for a in $(dig A +short irc.swiftirc.net) ; do export host=$(dig -x $a) ; ping -c5 $a > logs/ping/$host.log ; done
+          command: for a in $(dig A +short irc.swiftirc.net) ; do ping -c5 $a > logs/ping/$(dig -x $a +short)log ; done
           when: always
       - run: 
-          command: for a in $(dig A +short irc.swiftirc.net) ; do export host=$(dig -x $a) ; nc -w1 $a 6667 > logs/netcat/$host.log 2>&1 ; done
+          command: for a in $(dig A +short irc.swiftirc.net) ; do nc -w1 $a 6667 > logs/netcat/$(dig -x $a +short)log 2>&1 ; done
           when: always
 # CircleCI does not have IPv6 connectivity .........
 # TODO: workaround?
